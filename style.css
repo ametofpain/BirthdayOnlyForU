@@ -1,57 +1,99 @@
 body {
-    background: linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%);
+    background: #181c24;
     min-height: 100vh;
     margin: 0;
-    font-family: 'Segoe UI', sans-serif;
+    font-family: 'Montserrat', 'Segoe UI', sans-serif;
     display: flex;
     align-items: center;
     justify-content: center;
+    overflow: hidden;
+}
+.bg-anim {
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    z-index: 0;
+    pointer-events: none;
+    background: radial-gradient(circle at 20% 30%, #2b5876 0%, transparent 70%),
+                radial-gradient(circle at 80% 70%, #4e4376 0%, transparent 70%),
+                linear-gradient(135deg, #232526 0%, #414345 100%);
+    animation: bg-move 10s infinite alternate;
+}
+@keyframes bg-move {
+    0% { filter: blur(0px) brightness(1); }
+    100% { filter: blur(2px) brightness(1.1); }
 }
 .container {
-    background: rgba(255,255,255,0.9);
-    padding: 40px 60px;
-    border-radius: 20px;
-    box-shadow: 0 8px 32px rgba(0,0,0,0.15);
+    position: relative;
+    z-index: 1;
+    background: rgba(30, 34, 45, 0.95);
+    padding: 48px 64px;
+    border-radius: 24px;
+    box-shadow: 0 8px 40px 0 #000a;
     text-align: center;
+    max-width: 420px;
+    width: 100%;
+    margin: 40px auto;
+    border: 1.5px solid #2b5876;
 }
 h1 {
-    color: #ff6f61;
-    font-size: 2.5rem;
-    margin-bottom: 10px;
+    color: #ffb347;
+    font-size: 2.8rem;
+    margin-bottom: 16px;
+    letter-spacing: 1px;
+    text-shadow: 0 2px 16px #ffb34755;
 }
 p {
-    color: #333;
-    font-size: 1.2rem;
+    color: #e0e0e0;
+    font-size: 1.25rem;
+    margin-bottom: 28px;
 }
-button {
-    background: #ff6f61;
-    color: #fff;
+button.glow-btn {
+    background: linear-gradient(90deg, #ffb347 0%, #ffcc33 100%);
+    color: #232526;
     border: none;
-    padding: 12px 32px;
-    border-radius: 30px;
-    font-size: 1.1rem;
+    padding: 14px 38px;
+    border-radius: 32px;
+    font-size: 1.15rem;
+    font-weight: bold;
     cursor: pointer;
-    margin-top: 20px;
-    transition: background 0.3s;
+    margin-top: 10px;
+    box-shadow: 0 0 16px 2px #ffb34788, 0 2px 8px #000a;
+    transition: transform 0.2s, box-shadow 0.2s;
+    outline: none;
+    position: relative;
+    overflow: hidden;
 }
-button:hover {
-    background: #ff3b2e;
+button.glow-btn:hover {
+    transform: scale(1.07);
+    box-shadow: 0 0 32px 6px #ffb347cc, 0 2px 16px #000a;
 }
 #animationArea {
-    margin-top: 30px;
-    min-height: 100px;
+    margin-top: 36px;
+    min-height: 120px;
+    position: relative;
+    z-index: 2;
 }
 .confetti {
     position: absolute;
-    width: 12px;
-    height: 12px;
+    width: 14px;
+    height: 14px;
     border-radius: 50%;
-    opacity: 0.8;
-    animation: confetti-fall 2s linear forwards;
+    opacity: 0.85;
+    animation: confetti-fall 2.2s cubic-bezier(.5,1.8,.5,1) forwards;
 }
 @keyframes confetti-fall {
     to {
-        transform: translateY(400px) rotate(360deg);
+        transform: translateY(420px) rotate(720deg);
         opacity: 0;
     }
 }
+.fade-in {
+    opacity: 0;
+    animation: fadeIn 1.2s forwards;
+}
+.fade-in.delay-1 { animation-delay: 0.5s; }
+.fade-in.delay-2 { animation-delay: 1s; }
+@keyframes fadeIn {
+    to { opacity: 1; }
+}
+::-webkit-scrollbar { width: 0; }
