@@ -1,0 +1,118 @@
+body {
+    margin: 0;
+    font-family: 'Montserrat', sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background-color: #1a1a1a; /* Koyu siyahımsı arka plan */
+    color: #f0f0f0; /* Açık renk yazı */
+    overflow: hidden; /* Taşmaları engelle */
+    text-align: center;
+}
+
+.container {
+    width: 90%;
+    max-width: 700px;
+    padding: 40px;
+    background-color: #2a2a2a; /* Daha koyu bir kutu rengi */
+    border-radius: 15px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+    transition: opacity 0.8s ease-in-out, transform 0.8s ease-in-out;
+    opacity: 0;
+    transform: translateY(20px);
+    position: absolute; /* Her iki container'ın üst üste gelmesini sağlar */
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    min-height: 400px; /* Belirli bir yükseklik verelim */
+}
+
+.container.active {
+    opacity: 1;
+    transform: translate(-50%, -50%);
+}
+
+.container.hidden {
+    opacity: 0;
+    pointer-events: none; /* Gizli olduğunda tıklanamaz yapsın */
+}
+
+h1 {
+    font-size: 3.5em;
+    color: #ffd700; /* Altın rengi başlık için */
+    margin-bottom: 20px;
+    text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.7);
+}
+
+h2 {
+    font-size: 2.8em;
+    color: #ffd700;
+    margin-bottom: 20px;
+    text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.6);
+}
+
+p {
+    font-size: 1.2em;
+    line-height: 1.6;
+    margin-bottom: 30px;
+    color: #cccccc;
+}
+
+button {
+    background-color: #007bff; /* Mavi tonlu düğme */
+    color: white;
+    padding: 15px 30px;
+    border: none;
+    border-radius: 8px;
+    font-size: 1.2em;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    box-shadow: 0 4px 15px rgba(0, 123, 255, 0.4);
+}
+
+button:hover {
+    background-color: #0056b3;
+    transform: translateY(-3px);
+}
+
+.signature {
+    font-style: italic;
+    font-size: 1em;
+    margin-top: 20px;
+    color: #aaaaaa;
+}
+
+/* Responsive Tasarım */
+@media (max-width: 768px) {
+    h1 {
+        font-size: 2.5em;
+    }
+    h2 {
+        font-size: 2em;
+    }
+    p {
+        font-size: 1em;
+    }
+    button {
+        padding: 12px 25px;
+        font-size: 1em;
+    }
+}
+
+@media (max-width: 480px) {
+    .container {
+        padding: 20px;
+        min-height: 300px;
+    }
+    h1 {
+        font-size: 2em;
+    }
+    h2 {
+        font-size: 1.8em;
+    }
+}

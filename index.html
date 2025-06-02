@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Happy Birthday, Rehab!</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="container landing-page active" id="landingPage">
+        <h1>Happy Birthday, Rehab!</h1>
+        <p>A special day for a special person.</p>
+        <button id="surpriseButton">Discover Your Surprise</button>
+        <audio id="backgroundMusic" loop autoplay>
+            Your browser does not support the audio element.
+        </audio>
+    </div>
+
+    <div class="container reward-page" id="rewardPage">
+        <h2>Here's your reward...</h2>
+        <p>Our friendship is one of the greatest gifts. Thank you for being such an amazing friend, Rehab! Wishing you all the happiness and joy on your special day.</p>
+        <p class="signature">With love,</p>
+        <p class="signature">Your friend</p>
+    </div>
+
+    <script>
+        const surpriseButton = document.getElementById('surpriseButton');
+        const landingPage = document.getElementById('landingPage');
+        const rewardPage = document.getElementById('rewardPage');
+        const backgroundMusic = document.getElementById('backgroundMusic');
+
+        surpriseButton.addEventListener('click', () => {
+            landingPage.classList.remove('active');
+            landingPage.classList.add('hidden');
+            rewardPage.classList.add('active');
+            rewardPage.classList.remove('hidden');
+
+            // Şarkıyı başlatma/devam ettirme
+            if (backgroundMusic.paused) {
+                backgroundMusic.play().catch(error => {
+                    console.log("Autoplay prevented:", error);
+                    // Kullanıcı etkileşimi gerektiğinde bilgilendirme yapabiliriz.
+                });
+            }
+        });
+
+        // Sayfa yüklendiğinde müziği otomatik oynatma denemesi
+        window.addEventListener('load', () => {
+            backgroundMusic.volume = 0.3; // Sesi kısık başlasın
+            backgroundMusic.play().catch(error => {
+                console.log("Autoplay prevented:", error);
+                // Modern tarayıcılar, kullanıcı etkileşimi olmadan medya oynatmayı engelleyebilir.
+                // Bu durumda kullanıcı butona bastığında da şarkı başlayacaktır.
+            });
+        });
+    </script>
+</body>
+</html>
