@@ -5,10 +5,18 @@ body {
     justify-content: center;
     align-items: center;
     min-height: 100vh;
-    background-color: #1a1a1a; /* Koyu siyahımsı arka plan */
+    background: linear-gradient(-45deg, #0a0a23, #02024d, #232946, #121212, #010f57, #0a0a23);
+    background-size: 400% 400%;
+    animation: gradientBG 18s ease infinite;
     color: #f0f0f0; /* Açık renk yazı */
     overflow: hidden; /* Taşmaları engelle */
     text-align: center;
+}
+
+@keyframes gradientBG {
+    0% {background-position: 0% 50%;}
+    50% {background-position: 100% 50%;}
+    100% {background-position: 0% 50%;}
 }
 
 .container {
@@ -35,11 +43,13 @@ body {
 .container.active {
     opacity: 1;
     pointer-events: auto;
+    z-index: 2;
 }
 
 .container.hidden {
     opacity: 0;
-    pointer-events: none; /* Gizli olduğunda tıklanamaz yapsın */
+    pointer-events: none;
+    z-index: 1;
 }
 
 h1 {

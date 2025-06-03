@@ -8,22 +8,54 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        .confetti {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            pointer-events: none;
+            z-index: 9999;
+        }
+        .glow-text {
+            color: #ffd700;
+            text-shadow: 0 0 8px #ffd700, 0 0 16px #ff69b4, 0 0 24px #00cfff;
+            animation: glow 1.5s ease-in-out infinite alternate;
+        }
+        @keyframes glow {
+            from {
+                text-shadow: 0 0 8px #ffd700, 0 0 16px #ff69b4, 0 0 24px #00cfff;
+            }
+            to {
+                text-shadow: 0 0 24px #ffd700, 0 0 32px #ff69b4, 0 0 48px #00cfff;
+            }
+        }
+    </style>
+    <canvas id="confettiCanvas" class="confetti"></canvas>
 </head>
 <body>
     <div class="container landing-page active" id="landingPage">
+        <div style="font-size:2.2em; margin-bottom: 10px;">❤️💛💖💙💚💜</div>
         <h1>Happy Birthday, Rehab!</h1>
         <p>A special day for a special person.</p>
         <button id="surpriseButton">Discover Your Surprise</button>
         <audio id="backgroundMusic" loop autoplay>
+            <source src="SEE YOU AGAIN featuring Kali Uchis - Tyler, The Creator.mp3" type="audio/mpeg">
             Your browser does not support the audio element.
         </audio>
+        <div style="font-size:2.2em; margin-top: 10px;">💜💚💙💖💛❤️</div>
     </div>
 
     <div class="container reward-page" id="rewardPage">
-        <h2>Here's your reward...</h2>
-        <p>Our friendship is one of the greatest gifts. Thank you for being such an amazing friend, Rehab! Wishing you all the happiness and joy on your special day.</p>
+        <div style="font-size:2.2em; margin-bottom: 10px;">💖💛💚💙💜❤️</div>
+        <h2 class="glow-text">Here's your reward...</h2>
+        <p>Our friendship is one of the greatest gifts. Thank you for being such an amazing friend, Rehab!<br>
+        Wishing you all the happiness, blessings, and peace in your life. Inshallah, may all the beautiful things you wish for come true in your new age. May Allah grant you health, happiness, and tranquility!</p>
         <p class="signature">With love,</p>
-        <p class="signature">Your friend</p>
+        <p class="signature">Tiago</p>
+        <button id="backButton" style="position: absolute; top: 18px; left: 18px; background-color: #2d3d31; font-size: 1em; padding: 8px 18px;">Go Back</button>
+        <div style="font-size:2.2em; margin-top: 10px;">💜💙💚💛💖❤️</div>
     </div>
 
     <script>
@@ -31,6 +63,7 @@
         const landingPage = document.getElementById('landingPage');
         const rewardPage = document.getElementById('rewardPage');
         const backgroundMusic = document.getElementById('backgroundMusic');
+        const backButton = document.getElementById('backButton');
 
         surpriseButton.addEventListener('click', () => {
             landingPage.classList.remove('active');
@@ -47,6 +80,13 @@
             }
         });
 
+        backButton.addEventListener('click', () => {
+            rewardPage.classList.remove('active');
+            rewardPage.classList.add('hidden');
+            landingPage.classList.add('active');
+            landingPage.classList.remove('hidden');
+        });
+
         // Sayfa yüklendiğinde müziği otomatik oynatma denemesi
         window.addEventListener('load', () => {
             backgroundMusic.volume = 0.3; // Sesi kısık başlasın
@@ -55,6 +95,99 @@
                 // Modern tarayıcılar, kullanıcı etkileşimi olmadan medya oynatmayı engelleyebilir.
                 // Bu durumda kullanıcı butona bastığında da şarkı başlayacaktır.
             });
+        });
+
+        // Confetti effect
+        function randomColor() {
+            const colors = ['#ffd700', '#ff69b4', '#00cfff', '#ff6347', '#7cfc00', '#ffb347', '#a020f0'];
+            return colors[Math.floor(Math.random() * colors.length)];
+        }
+        function launchConfetti() {
+            const canvas = document.getElementById('confettiCanvas');
+            const ctx = canvas.getContext('2d');
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+            const confettiCount = 120;
+            const confettis = [];
+            for (let i = 0; i < confettiCount; i++) {
+                confettis.push({
+                    x: Math.random() * canvas.width,
+                    y: Math.random() * -canvas.height,
+                    r: 6 + Math.random() * 8,
+                    d: 2 + Math.random() * 2,
+                    color: randomColor(),
+                    tilt: Math.random() * 10 - 10,
+                    tiltAngle: 0,
+                    tiltAngleIncremental: (Math.random() * 0.07) + 0.05
+                });
+            }
+            let angle = 0;
+            function draw() {
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+                angle += 0.01;
+                for (let i = 0; i < confettiCount; i++) {
+                    let c = confettis[i];
+                    c.y += (Math.cos(angle + c.d) + 1 + c.d / 2);
+                    c.x += Math.sin(angle);
+                    c.tiltAngle += c.tiltAngleIncremental;
+                    c.tilt = Math.sin(c.tiltAngle) * 15;
+                    ctx.beginPath();
+                    ctx.lineWidth = c.r;
+                    ctx.strokeStyle = c.color;
+                    ctx.moveTo(c.x + c.tilt + c.r / 3, c.y);
+                    ctx.lineTo(c.x + c.tilt, c.y + c.tilt + c.r);
+                    ctx.stroke();
+                }
+                requestAnimationFrame(draw);
+            }
+            draw();
+            setTimeout(() => {
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+            }, 3500);
+        }
+        // Rastgele pozitif mesajlar
+        const compliments = [
+            "You light up every room you enter! 🌟",
+            "Your smile is contagious! 😊",
+            "You make the world a better place! 🌍",
+            "You are a true friend! 💖",
+            "Your kindness inspires everyone! ✨",
+            "You have a heart of gold! 🥇",
+            "You are amazing just the way you are! 🌈",
+            "Never forget how special you are! 🎈",
+            "You bring so much joy to those around you! 🎉",
+            "Stay awesome, Rehab! 🦄"
+        ];
+        function showCompliment() {
+            const msg = compliments[Math.floor(Math.random() * compliments.length)];
+            let complimentDiv = document.getElementById('complimentMsg');
+            if (!complimentDiv) {
+                complimentDiv = document.createElement('div');
+                complimentDiv.id = 'complimentMsg';
+                complimentDiv.style.position = 'fixed';
+                complimentDiv.style.bottom = '40px';
+                complimentDiv.style.left = '50%';
+                complimentDiv.style.transform = 'translateX(-50%)';
+                complimentDiv.style.background = 'rgba(40,40,40,0.95)';
+                complimentDiv.style.color = '#ffd700';
+                complimentDiv.style.padding = '16px 32px';
+                complimentDiv.style.borderRadius = '18px';
+                complimentDiv.style.fontSize = '1.3em';
+                complimentDiv.style.boxShadow = '0 4px 18px rgba(0,0,0,0.25)';
+                complimentDiv.style.zIndex = '10001';
+                complimentDiv.style.transition = 'opacity 0.5s';
+                document.body.appendChild(complimentDiv);
+            }
+            complimentDiv.textContent = msg;
+            complimentDiv.style.opacity = '1';
+            setTimeout(() => {
+                complimentDiv.style.opacity = '0';
+            }, 2500);
+        }
+        surpriseButton.addEventListener('click', () => {
+            // ...existing code...
+            launchConfetti();
+            showCompliment();
         });
     </script>
 </body>
